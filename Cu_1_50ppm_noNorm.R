@@ -128,14 +128,13 @@ df_long$Condition <- factor(df_long$Condition, levels = c("50 ppm", "25 ppm", "1
 # Plot
 # ------------------------------
 p <- ggplot(df_long, aes(x = Strain, y = Value, fill = Fraction)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  facet_wrap(~ Condition, ncol = 1, scales = "free_y") +
+  geom_bar(stat = "identity", position = "stack") +
   labs(
     title = "Cu²⁺ Incubation Comparison (1 ppm, 2.5 ppm, 5 ppm, 10 ppm, 25 ppm, 50 ppm)",
     x = "",
     y = "Cu²⁺ (ppm)"
   ) +
+  facet_wrap(~ Condition, ncol = 1, scales = "free_y") +
   theme_bw(base_size = 10) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),

@@ -27,7 +27,7 @@ df_long$Fraction <- factor(df_long$Fraction, levels = c("Supernatant", "Pellet")
 p <- ggplot(df_long, aes(x = Fraction, y = Value, fill = Strain)) +
   geom_bar(stat = "identity", width = 0.45) +
   labs(
-    title = "Cu²⁺ Incubation – Stacked by Strain",
+    title = "Cu²⁺ Incubation Comparison (50 ppm, 25 ppm, 10 ppm, 5 ppm, 2.5 ppm, 1 ppm)",
     x = "",
     y = "Cu²⁺ (ppm)"
   ) +
@@ -40,3 +40,4 @@ p <- ggplot(df_long, aes(x = Fraction, y = Value, fill = Strain)) +
 
 print (p)
 
+ggsave("Cu_1_50ppm_noNorm_AllStaced.png", p, width = 15, height = 8, dpi = 300)
