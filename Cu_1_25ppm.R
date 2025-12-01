@@ -3,6 +3,23 @@ library(tidyr)
 library(ggplot2)
 
 # ------------------------------
+# 25 ppm dataset
+# ------------------------------
+df_25 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(1.665, 0.715, 1.531, 0.795, 1.818, 2.620),
+  Pellet      = c(1.376, 3.005, 1.461, 2.175, 1.439, 1.286),
+  Condition   = "25 ppm"
+)
+
+# ------------------------------
 # 10 ppm dataset
 # ------------------------------
 df_10 <- data.frame(
@@ -73,7 +90,7 @@ df_1 <- data.frame(
 # ------------------------------
 # Combine datasets
 # ------------------------------
-df_all <- bind_rows(df_10, df_5, df_2.5, df_1)
+df_all <- bind_rows(df_25, df_10, df_5, df_2.5, df_1)
 
 # ------------------------------
 # Convert to long format + normalize
@@ -88,9 +105,9 @@ df_long <- df_all %>%
   mutate(Percent = Value / sum(Value))
 
 # ------------------------------
-# Reorder facets so 5 ppm is on top
+# Reorder facets so 25 ppm is on top
 # ------------------------------
-df_long$Condition <- factor(df_long$Condition, levels = c("10 ppm", "5 ppm", "2.5 ppm", "1 ppm"))
+df_long$Condition <- factor(df_long$Condition, levels = c("25 ppm", "10 ppm", "5 ppm", "2.5 ppm", "1 ppm"))
 
 # ------------------------------
 # Plot
@@ -100,7 +117,7 @@ p <- ggplot(df_long, aes(x = Strain, y = Percent, fill = Fraction)) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   facet_wrap(~ Condition, ncol = 1, scales = "free_y") +
   labs(
-    title = "Cu²⁺ Incubation Comparison (1 ppm, 2.5 ppm, 5 ppm, 10 ppm)",
+    title = "Cu²⁺ Incubation Comparison (1 ppm, 2.5 ppm, 5 ppm, 10 ppm, 25 ppm)",
     x = "",
     y = "Percentage"
   ) +
@@ -116,4 +133,4 @@ print (p)
 # Export PNG at 300 dpi
 # ------------------------------
 
-ggsave("Cu_1_10ppm_Norm_faceted.png", p, width = 10, height = 8, dpi = 300)
+ggsave("Cu_1_25ppm_Norm_faceted.png", p, width = 10, height = 8, dpi = 300)
