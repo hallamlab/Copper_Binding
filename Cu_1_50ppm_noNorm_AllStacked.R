@@ -40,4 +40,4 @@ p <- ggplot(df_long, aes(x = Fraction, y = Value, fill = Strain)) +
 
 print (p)
 
-ggsave("Cu_1_50ppm_noNorm_AllStaced.png", p, width = 15, height = 8, dpi = 300)
+ggsave("Cu_1_50ppm_noNorm_AllStacked.png", p, width = 15, height = 8, dpi = 300)
