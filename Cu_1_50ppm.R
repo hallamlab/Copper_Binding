@@ -130,7 +130,7 @@ df_long$Condition <- factor(df_long$Condition, levels = c("50 ppm", "25 ppm", "1
 # Plot
 # ------------------------------
 p <- ggplot(df_long, aes(x = Strain, y = Percent, fill = Fraction)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", width = 0.45) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   facet_wrap(~ Condition, ncol = 1, scales = "free_y") +
   labs(

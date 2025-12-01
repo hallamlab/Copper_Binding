@@ -128,7 +128,7 @@ df_long$Condition <- factor(df_long$Condition, levels = c("50 ppm", "25 ppm", "1
 # Plot
 # ------------------------------
 p <- ggplot(df_long, aes(x = Strain, y = Value, fill = Fraction)) +
-  geom_bar(stat = "identity", position = "stack") +
+  geom_bar(stat = "identity", position = "stack", width = 0.45) +
   labs(
     title = "Cu²⁺ Incubation Comparison (1 ppm, 2.5 ppm, 5 ppm, 10 ppm, 25 ppm, 50 ppm)",
     x = "",
