@@ -1,0 +1,167 @@
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# ------------------------------
+# 100 ppm dataset
+# ------------------------------
+df_100 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(2.993, 2.942, 3.189, 2.915, 2.994, 3.266),
+  Pellet      = c(1.427, 4.171, 1.397, 3.887, 4.027, 3.002),
+  Condition   = "100 ppm"
+)
+
+# ------------------------------
+# 50 ppm dataset
+# ------------------------------
+df_50 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(2.508, 1.387, 1.771, 3.435, 1.748, 2.243),
+  Pellet      = c(1.153, 4.604, 1.410, 2.176, 1.344, 2.071),
+  Condition   = "50 ppm"
+)
+
+# ------------------------------
+# 25 ppm dataset
+# ------------------------------
+df_25 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(1.665, 0.715, 1.531, 0.795, 1.818, 2.620),
+  Pellet      = c(1.376, 3.005, 1.461, 2.175, 1.439, 1.286),
+  Condition   = "25 ppm"
+)
+
+# ------------------------------
+# 10 ppm dataset
+# ------------------------------
+df_10 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(0.790, 0.635, 0.940, 0.411, 0.432, 0.511),
+  Pellet      = c(1.498, 1.589, 1.692, 1.786, 1.561, 1.680),
+  Condition   = "10 ppm"
+)
+
+# ------------------------------
+# 5 ppm dataset
+# ------------------------------
+df_5 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(0.671, 0.665, 0.660, 1.092, 0.460, 0.795),
+  Pellet      = c(1.369, 1.384, 1.358, 1.347, 1.272, 1.323),
+  Condition   = "5 ppm"
+)
+
+# ------------------------------
+# 2.5 ppm dataset
+# ------------------------------
+df_2.5 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(1.007, 2.174, 0.941, 1.634, 1.275, 0.832),
+  Pellet      = c(1.097, 1.450, 1.059, 0.985, 1.052, 1.011),
+  Condition   = "2.5 ppm"
+)
+
+# ------------------------------
+# 1 ppm dataset
+# ------------------------------
+df_1 <- data.frame(
+  Strain = c(
+    "CB2A",
+    "CB2A_p4A_RsaA",
+    "CB2A_p4A_RsaA_LanM",
+    "CB2A_p4A_RsaA_LBT",
+    "CB2A_p4A_RsaA_CuBP",
+    "CB2A_p4A_RsaA_Azurin"
+  ),
+  Supernatant = c(0.95, 1.262, 0.924, 0.955, 0.994, 1.040),
+  Pellet      = c(-0.127, -0.083, 0.006, 0.000, 0.115, 0.081),
+  Condition   = "1 ppm"
+)
+
+# ------------------------------
+# Combine datasets
+# ------------------------------
+df_all <- bind_rows(df_100, df_50, df_25, df_10, df_5, df_2.5, df_1)
+
+# ------------------------------
+# Convert to long format (NO NORMALIZATION)
+# ------------------------------
+df_long <- df_all %>%
+  pivot_longer(
+    cols = c(Supernatant, Pellet),
+    names_to = "Partition",
+    values_to = "Value"
+  ) 
+
+# ------------------------------
+# Reorder facets so 100 ppm is on top
+# ------------------------------
+df_long$Condition <- factor(df_long$Condition, levels = c("100 ppm", "50 ppm", "25 ppm", "10 ppm", "5 ppm", "2.5 ppm", "1 ppm"))
+
+# ------------------------------
+# Plot
+# ------------------------------
+p100 <- ggplot(df_long, aes(x = Strain, y = Value, fill = Partition)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.45) +
+  labs(
+    title = "Cu²⁺ Incubation Comparison (1 ppm, 2.5 ppm, 5 ppm, 10 ppm, 25 ppm, 50 ppm, 100 ppm)",
+    x = "",
+    y = "Cu²⁺ (ppm)"
+  ) +
+  facet_wrap(~ Condition, ncol = 1, scales = "free_y") +
+  theme_bw(base_size = 10) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(size = 10, face = "bold")
+  )
+
+print (p)
+
+# ------------------------------
+# Export PNG at 300 dpi
+# ------------------------------
+
+ggsave("Cu_1_100ppm_noNorm_faceted.png", p100, width = 8, height = 10, dpi = 300)
