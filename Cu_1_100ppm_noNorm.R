@@ -158,7 +158,7 @@ p100 <- ggplot(df_long, aes(x = Strain, y = Value, fill = Partition)) +
     strip.text = element_text(size = 10, face = "bold")
   )
 
-print (p)
+print (p100)
 
 # ------------------------------
 # Export PNG at 300 dpi
