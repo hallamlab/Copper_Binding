@@ -55,4 +55,6 @@ p3 <- ggplot(df_long, aes(x = x_vals,
     legend.position = "right"
   )
 
+print (p3)
+
 ggsave("Cu_1_100ppm_ScatteredLines.png", p3, width = 15, height = 8, dpi = 300)
