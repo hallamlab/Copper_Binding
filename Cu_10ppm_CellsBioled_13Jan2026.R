@@ -69,3 +69,5 @@ p <- ggplot(df_long, aes(x = Strain, y = Value, fill = Fraction)) +
 
 # Show plot
 p
+
+ggsave("Cu_10ppm_CellsBoiled.png", p, width = 10, height = 6, dpi = 300)
