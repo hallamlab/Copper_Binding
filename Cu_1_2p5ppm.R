@@ -75,6 +75,8 @@ p <- ggplot(df_long, aes(x = Strain, y = Percent, fill = Fraction)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     strip.text = element_text(size = 14, face = "bold")
   )
+print(p)
+
 
 # ------------------------------
 # Export PNG at 300 dpi

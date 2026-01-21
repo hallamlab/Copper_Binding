@@ -48,3 +48,4 @@ ggplot(df_long, aes(x = Strain, y = Percent, fill = Fraction)) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1)
   )
+P
