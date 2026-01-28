@@ -1,0 +1,17 @@
+install.packages("ggplot2")
+library(ggplot2)
+
+
+set.seed(123) # for reproducibility
+data <- data.frame(
+x = 1:100,
+y = sin(1:100 / 10) * 10 + rnorm(100, 0, 2)
+)
+
+ggplot(data, aes(x = x, y = y)) +
+geom_point(shape = 21, size = 3, fill = "lightblue", color = "darkblue") + # Customize markers
+geom_smooth(method = "loess", se = TRUE, color = "red", linetype = "solid", linewidth = 1) + # Customize smooth line
+labs(title = "Scatter Plot with Smooth Line and Markers",
+x = "X-axis Label",
+y = "Y-axis Label") +
+theme_minimal() # Optional: Apply a clean theme
