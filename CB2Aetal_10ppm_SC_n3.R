@@ -56,3 +56,5 @@ ggplot(df_long_stacked, aes(x = Protein, y = Mean_Value, fill = Fraction)) +
   # Use scale_fill_manual to define specific colors
   scale_fill_manual(values = c("Pellet" = "#ED7D31", "Supernatant" = "#4472C4"))
  
+
+ggsave("CB2Aetal_10ppm_SC_n3.png", width = 10, height = 6, dpi = 300)
